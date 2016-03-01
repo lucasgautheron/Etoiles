@@ -1,0 +1,157 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{import}
+\subimport{../common/}{header}
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Distance maximale de visibilité}
+\author{}
+\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+Le seuil scopique absolu de visibilité est donné par  :
+\section{Calculs}
+\begin{equation}
+I \geq I_{min} \sim 2,5 \times 10^{-6} \mbox{  lumen/m}^2
+\end{equation}
+
+Où $I_{min}$ est le flux lumineux minimum pouvant être perçu pour une source fixe éclairant constamment.
+
+Par ailleurs le flux lumineux en lumen/m$^2$ (ou "lux") est donné par :
+\begin{equation}
+I = \dfrac{L}{d^2} = \dfrac{L_0}{d^2}  \dint_{0}^{+\infty} V(\lambda) p(\lambda) \dd \lambda
+\label{eq:integral}
+\end{equation}
+
+Où $L_0 = 1700 \mbox{lumen/W}$ en vision scopique, $V$ est l'efficacité lumineuse spectrale relative, et $p(\lambda)$ la puissance du signal lumineux (en W) comprise dans l'invervalle $[\lambda, \lambda+\dd\lambda[$.
+
+La fonction $V$ a l'allure donnée sur la figure (\ref{fig:efficacite_spectrale}). On réalise un fit gaussien des données expérimentales afin d'en obtenir une interpolation fiable qui permette le calcul de l'intégrale \eqref{eq:integral}.
+
+\section{Figures (temp)}
+
+\begin{figure}[H]
+\centering
+  \caption{Efficacité lumineuse spectrale et fit $V(\lambda)$ sous la forme $\exp \left ( (\lambda-\lambda_0)^2/2\Delta\lambda^2\right )$. On trouve $\lambda_0 = $ 503 nm, $\Delta \lambda^2 =$ 40 nm.
+\label{fig:efficacite_spectrale}}
+\input{figures/efficacite}
+\end{figure}
+
+Les étoiles sont des corps noirs. Aussi il est possible de considérer, si on néglige les phénomènes atmosphériques, que $p(\lambda)$ est simplement le spectre d'un corps noir (loi de planck). Dans ce cas, la valeur de l'intégrale ne dépend que de la température et du rayon de l'étoile :
+
+\begin{equation}
+I =  4\pi \dfrac{R_{*}}{d^2} ^2 I_{*}(T) = 4\pi L_0 \dfrac{R_{*}^2}{d^2} \sigma T_{*}^4 \eta(T)
+\label{eq:integral_blackbody}
+\end{equation}
+
+Ici $\eta$ est une fonction sans dimension qui représente le "rendement lumineux" de l'étoile :
+
+Et par ailleurs :
+\begin{equation}\eta (T) = \dfrac{1}{\sigma T_{*}^4}  \dint_{0}^{+\infty} \dfrac{2\pi h c^2}{\lambda^5} \dfrac{e^{\left( (\lambda-\lambda_0)^2/2\Delta \lambda^2\right )}}{e^{hc/(\lambda kT)}-1}
+\end{equation}
+
+$\eta$ est nécessairement plus petit que 1. Dans le cas idéal d'un rayonnement monochromatique à la longueur d'onde de sensibilité maximum de l'oeil $\eta = 1$. Pour un corps noir cependant le spectre est clairement non monochromatique et le rendement plus faible que 1. La courbe de $\eta(T)$ est donnée figure $\ref{fig:eta}$.
+
+\begin{figure}[H]
+\centering
+  \caption{rendement lumineux $\eta$ d'un corps noir en fonction de sa température. La luminosité apparente pour l'oeil d'un corps noir est donné par le produit de sa puissance et de $\eta$. 
+\label{fig:eta}}
+\input{figures/eta}
+\end{figure}
+
+Le flux lumineux par unité de surface de l'étoile $I_*(T) = L_0 \eta(T) \sigma T^4$ (qui ne dépend donc également que de la température) en lumen/m$^2$ est représenté figure \ref{fig:eta_t4}. 
+
+\begin{figure}[H]
+\centering
+  \caption{Courbe de $I_*(T) = L_0 \eta(T) \sigma T^4$, qui est directement proportionnel au flux reçu par l'oeil.
+\label{fig:eta_t4}}
+\input{figures/eta_t4}
+\end{figure}
+
+Finalement la condition de visibilité se réécrit :
+
+\begin{equation}
+ d \leq R_{*} \sqrt{4\pi\dfrac{I_*(T)}{I_{min}}}
+\end{equation}
+
+Cette équation peut être réécrite en terme de $\eta(T)$ :
+\begin{equation}
+ d \leq R_{*} \sqrt{4\pi\dfrac{L_0 \sigma T^4 \eta(T)}{I_{min}}}
+\end{equation}
+
+La luminosité donne donc une limite de la forme $d \leq \theta (T) R_*$. La fonction $\theta(T)$ est représentée figure \ref{fig:theta} ainsi que les valeurs de $d/R$ pour certaines étoiles. 
+
+\begin{figure}[H]
+\centering
+  \caption{Courbe de $\theta(T) =  R_* /d_{max}$. La zone verte sous la courbe correspond aux étoiles visibles.  
+\label{fig:theta}}
+\input{figures/theta.tex}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+  \caption{Courbe de $\theta(T) =  R_* /d_{max}$. La zone verte sous la courbe correspond aux étoiles visibles.  
+\label{fig:theta}}
+\input{figures/theta_high.tex}
+\end{figure}
+
+%
+%\begin{figure}[H]
+%\centering
+%  \caption{$\mu_b(z)$ SN Ia et best fit ($\Omega_m = $ 0,25 et $\Omega_v = $ 0,75)}
+%\input{figures/snIa_bestfit}
+%\end{figure}
+\end{document}
