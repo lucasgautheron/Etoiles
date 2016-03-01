@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <vector>
 
 #define CONST_CELERITY (double(299792458.0))
 #define CONST_BOLTZMANN (double(1.3806503e-23))
@@ -26,6 +27,39 @@
 
 #define F(i,o) (i*V(o))
 
+struct point
+{
+    double wlength, transmittance;
+};
+
+std::vector<point *> atmosphere;
+
+void load_atmosphere()
+{
+    FILE *fp = fopen("atmosphere.res", "r");
+    float w, a, b, c, T;
+    while(fscanf(fp, "%f %f %f %f %f", &w, &a, &b, &c, &T) > 3)
+    {
+        point *p = new point();
+        p->wlength = w;
+        p->transmittance = T;
+        atmosphere.push_back(p);
+    }
+    fclose(fp);
+}
+
+double transmittance(double wlength)
+{
+    for(int i = 0; i < atmosphere.size(); ++i)
+    {
+        if(wlength * 1e9 < atmosphere[i]->wlength)
+        {
+            return atmosphere[i]->transmittance;
+        }
+    }
+    return 1;
+}
+
 int main( int argc, const char* argv[] )
 {
     if(argc < 5) 
@@ -33,6 +67,8 @@ int main( int argc, const char* argv[] )
         printf("missing parameters");
         return 1;
     }
+
+    load_atmosphere();
 
     double temperature = strtod(argv[1], NULL), om_from = omega(strtod(argv[2], NULL)), om_to = omega(strtod(argv[3], NULL));
     if(om_from > om_to) { double aux = om_from; om_from = om_to; om_to = aux; }
@@ -51,7 +87,7 @@ int main( int argc, const char* argv[] )
     int i = 0, k = delta;
     for(double omega = om_from; omega < om_to; omega += step)
     {
-        cur = (1.0/4.0)*I(temperature, omega);
+        cur = (1.0/4.0)*I(temperature, omega) * transmittance(wavelength(omega));
         cur_coef = F(cur, omega);
         power += cur;
         power_coef += cur_coef;

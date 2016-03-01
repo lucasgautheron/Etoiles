@@ -99,8 +99,17 @@ I =  4\pi \dfrac{R_{*}}{d^2} ^2 I_{*}(T) = 4\pi L_0 \dfrac{R_{*}^2}{d^2} \sigma 
 Ici $\eta$ est une fonction sans dimension qui représente le "rendement lumineux" de l'étoile :
 
 Et par ailleurs :
-\begin{equation}\eta (T) = \dfrac{1}{\sigma T_{*}^4}  \dint_{0}^{+\infty} \dfrac{2\pi h c^2}{\lambda^5} \dfrac{e^{\left( (\lambda-\lambda_0)^2/2\Delta \lambda^2\right )}}{e^{hc/(\lambda kT)}-1}
+\begin{equation}\eta (T) = \dfrac{1}{\sigma T_{*}^4}  \dint_{0}^{+\infty} \dfrac{2\pi h c^2}{\lambda^5} \dfrac{e^{\left( (\lambda-\lambda_0)^2/2\Delta \lambda^2\right )}}{e^{hc/(\lambda kT)}-1} H(\lambda)
 \end{equation}
+
+La fonction $\lambda \mapsto H(\lambda)$ représente la fraction de rayonnement transmise à travers l'atmosphère (à la verticale par exemple).
+
+\begin{figure}[H]
+\centering
+  \caption{Courbe de transmission $H(\lambda)$ de l'atmosphère (pour une épaisseur traversée égale à 1 atmosphère)
+\label{fig:atmo}}
+\input{figures/atmosphere.tex}
+\end{figure}
 
 $\eta$ est nécessairement plus petit que 1. Dans le cas idéal d'un rayonnement monochromatique à la longueur d'onde de sensibilité maximum de l'oeil $\eta = 1$. Pour un corps noir cependant le spectre est clairement non monochromatique et le rendement plus faible que 1. La courbe de $\eta(T)$ est donnée figure $\ref{fig:eta}$.
 
@@ -146,13 +155,6 @@ La luminosité donne donc une limite de la forme $d \leq \theta (T) R_*$. La fon
   \caption{Courbe de $\theta(T) =  R_* /d_{max}$. La zone verte sous la courbe correspond aux étoiles visibles.  
 \label{fig:theta}}
 \input{figures/theta_high.tex}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-  \caption{Courbe de transmission de l'atmosphère à l'équateur
-\label{fig:atmo}}
-\input{figures/atmosphere.tex}
 \end{figure}
 
 %
