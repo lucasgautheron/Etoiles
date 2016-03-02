@@ -102,7 +102,7 @@ I =  4\pi \dfrac{R_{*}}{d^2} ^2 I_{*}(T) = 4\pi L_0 \dfrac{R_{*}^2}{d^2} \sigma 
 Ici $\eta$ est une fonction sans dimension qui représente le "rendement lumineux" de l'étoile :
 
 Et par ailleurs :
-\begin{equation}\eta (T) = \dfrac{1}{\sigma T_{*}^4}  \dint_{0}^{+\infty} \dfrac{2\pi h c^2}{\lambda^5} \dfrac{e^{\left( (\lambda-\lambda_0)^2/2\Delta \lambda^2\right )}}{e^{hc/(\lambda kT)}-1} H(\lambda)
+\begin{equation}\eta (T) = \dfrac{1}{\sigma T_{*}^4}  \dint_{0}^{+\infty} \dfrac{2\pi h c^2}{\lambda^5} \dfrac{e^{\left( (\lambda-\lambda_0)^2/2\Delta \lambda^2\right )}}{e^{hc/(\lambda kT)}-1} H(\lambda) \dd \lambda
 \end{equation}
 
 La fonction $\lambda \mapsto H(\lambda)$ représente la fraction de rayonnement transmise à travers l'atmosphère (à la verticale par exemple).
@@ -168,6 +168,19 @@ Si bien que :
 
 \begin{equation}
 H_{\mbox{hor}}(\lambda) = H(\lambda)^{\sqrt{\pi R/2L}}
+\end{equation}
+
+Or $\sqrt{\pi R/2L} \sim $ 35 ! On ne voit rien à l'horizon. Il faut s'en approcher légèrement seulement.
+
+Plus généralement, il faut intégrer numériquement :
+\begin{equation}
+H_\theta(\lambda) = \exp \left [ -\alpha_0(\lambda) \dint_0^{+\infty}\exp(-x/L) \dfrac{x + R}{\sqrt{(x+R)^2 -  R^2\cos^2 \theta }} \dd x\right ] 
+\end{equation}
+
+Et alors :
+
+\begin{equation}
+\ln \dfrac{H_\theta(\lambda)}{H_\lambda} = \dfrac{1}{L}\dint_0^{+\infty}\exp(-x/L) \dfrac{x + R}{\sqrt{(x+R)^2 -  R^2\cos^2 \theta }} \dd x
 \end{equation}
 
 \begin{figure}[H]
