@@ -161,7 +161,13 @@ H_{\mbox{hor}}(\lambda) \simeq K \exp \left [ -\dint_0^{h} \alpha(x, \lambda) \s
 On suppose par ailleurs que l'atmosphère possède un profil isotherme et que $\alpha(x, \lambda) = \alpha_0(\lambda) \exp(-x/L)$ ($L \ll h)$. Dès lors :
 
 \begin{equation}
-H_{\mbox{hor}}(\lambda) \simeq K \exp \left [ - \alpha_0 (\lambda) \dint_0^{h} \exp(-x/L) \sqrt{\dfrac{R}{2x}} \dd x\right ] 
+H_{\mbox{hor}}(\lambda) \simeq K \exp \left [ - \sqrt{\dfrac{R}{2}} \alpha_0 (\lambda) \dint_0^{+\infty} \dfrac{\exp(-x/L)}{\sqrt{x}} \dd x\right ] = K \exp \left [ - \sqrt{\dfrac{\pi R L}{2}} \alpha_0 (\lambda)\right ]
+\end{equation}
+
+Si bien que :
+
+\begin{equation}
+H_{\mbox{hor}}(\lambda) = H(\lambda)^{\sqrt{\pi R/2L}}
 \end{equation}
 
 \begin{figure}[H]
