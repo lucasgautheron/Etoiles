@@ -62,8 +62,11 @@
 \begin{document}
 \maketitle
 
-Le seuil scopique absolu de visibilité est donné par  :
 \section{Calculs}
+
+\subsection{Seuil scopique de vision}
+
+Le seuil scopique absolu de visibilité est donné par  :
 \begin{equation}
 I \geq I_{min} \sim 2,5 \times 10^{-6} \mbox{  lumen/m}^2
 \end{equation}
@@ -80,14 +83,14 @@ Où $L_0 = 1700 \mbox{lumen/W}$ en vision scopique, $V$ est l'efficacité lumine
 
 La fonction $V$ a l'allure donnée sur la figure (\ref{fig:efficacite_spectrale}). On réalise un fit gaussien des données expérimentales afin d'en obtenir une interpolation fiable qui permette le calcul de l'intégrale \eqref{eq:integral}.
 
-\section{Figures (temp)}
-
 \begin{figure}[H]
 \centering
   \caption{Efficacité lumineuse spectrale et fit $V(\lambda)$ sous la forme $\exp \left ( (\lambda-\lambda_0)^2/2\Delta\lambda^2\right )$. On trouve $\lambda_0 = $ 503 nm, $\Delta \lambda^2 =$ 40 nm.
 \label{fig:efficacite_spectrale}}
 \input{figures/efficacite}
 \end{figure}
+
+\subsection{Corps noir}
 
 Les étoiles sont des corps noirs. Aussi il est possible de considérer, si on néglige les phénomènes atmosphériques, que $p(\lambda)$ est simplement le spectre d'un corps noir (loi de planck). Dans ce cas, la valeur de l'intégrale ne dépend que de la température et du rayon de l'étoile :
 
@@ -104,14 +107,62 @@ Et par ailleurs :
 
 La fonction $\lambda \mapsto H(\lambda)$ représente la fraction de rayonnement transmise à travers l'atmosphère (à la verticale par exemple).
 
+$\eta$ est nécessairement plus petit que 1. Dans le cas idéal d'un rayonnement monochromatique à la longueur d'onde de sensibilité maximum de l'oeil $\eta = 1$. Pour un corps noir cependant le spectre est clairement non monochromatique et le rendement plus faible que 1. La courbe de $\eta(T)$ est donnée figure $\ref{fig:eta}$.
+
+\subsection{Atmosphère}
+
+La courbe de transmission de l'atmosphère à la verticale est donnée par la figure suivante :
+
 \begin{figure}[H]
 \centering
-  \caption{Courbe de transmission $H(\lambda)$ de l'atmosphère (pour une épaisseur traversée égale à 1 atmosphère)
+  \caption{Courbe de transmission $H(\lambda)$ de l'atmosphère (traversée à la verticale)
 \label{fig:atmo}}
 \input{figures/atmosphere.tex}
 \end{figure}
 
-$\eta$ est nécessairement plus petit que 1. Dans le cas idéal d'un rayonnement monochromatique à la longueur d'onde de sensibilité maximum de l'oeil $\eta = 1$. Pour un corps noir cependant le spectre est clairement non monochromatique et le rendement plus faible que 1. La courbe de $\eta(T)$ est donnée figure $\ref{fig:eta}$.
+$H$ peut s'obtenir si l'on connait la quantité de rayonnement absorbée par unité d'épaisseur d'atmosphère en fonction de l'altitude $\alpha(x, \lambda)$ :
+\begin{equation}
+H(\lambda) = K \exp \left [ -\dint_0^{+\infty} \alpha(x, \lambda) \dd l\right ]
+\end{equation}
+
+Si l'atmosphère est traversée "de biais" : 
+
+\begin{equation}
+H_\theta(\lambda) = K \exp \left [ -\dint_0^{+\infty} \alpha(x(l), \lambda) \dd l\right ] \mbox{ et } x = \sqrt{R^2 + l^2 + 2 R l \sin \theta} - R
+\end{equation}
+
+De là : 
+\begin{equation}
+l^2 + 2 R l \sin \theta + R^2 - (x+R)^2 = 0
+\end{equation}
+
+\begin{equation}
+\Delta = 4 R^2 \sin^2 \theta - 4 R^2 + 4 (x+R)^2 = 4 \left [ (x+R)^2 -  R^2\cos^2 \theta \right ]
+\end{equation}
+
+\begin{equation}
+l = - R \sin \theta + \sqrt{(x+R)^2 -  R^2\cos^2 \theta }
+\end{equation}
+
+\begin{equation}
+\dd l =  \dfrac{x + R}{\sqrt{(x+R)^2 -  R^2\cos^2 \theta }} \dd x
+\end{equation}
+
+\begin{equation}
+H_\theta(\lambda) = K \exp \left [ -\dint_0^{+\infty} \alpha(x, \lambda) \dfrac{x + R}{\sqrt{(x+R)^2 -  R^2\cos^2 \theta }} \dd x\right ] 
+\end{equation}
+
+En supposant que l'atmosphère est de dimension $h$ très inférieure au rayon terrestre, et à l'horizon ($\theta = 0$) :
+
+\begin{equation}
+H_{\mbox{hor}}(\lambda) \simeq K \exp \left [ -\dint_0^{h} \alpha(x, \lambda) \sqrt{\dfrac{R}{2x}} \dd x\right ] 
+\end{equation}
+
+On suppose par ailleurs que l'atmosphère possède un profil isotherme et que $\alpha(x, \lambda) = \alpha_0(\lambda) \exp(-x/L)$ ($L \ll h)$. Dès lors :
+
+\begin{equation}
+H_{\mbox{hor}}(\lambda) \simeq K \exp \left [ - \alpha_0 (\lambda) \dint_0^{h} \exp(-x/L) \sqrt{\dfrac{R}{2x}} \dd x\right ] 
+\end{equation}
 
 \begin{figure}[H]
 \centering
