@@ -2,7 +2,7 @@ set terminal epslatex
 set out '../figures/atmosphere.tex'
 
 set xlabel '$\lambda$ (en nm)'
-set ylabel '$A$'
+set ylabel '$H(\lambda)$'
 
 set xrange [270:900]
 set yrange [0:1.1]
