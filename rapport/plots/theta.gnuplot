@@ -39,6 +39,12 @@ set object circle at 15000,482348111 radius char 0.25\
 
 set label 'E. C. Majoris' at 14000,602348111 front
 
+# Rho Cassiopeiae
+set object circle at 7500,245733525.734 radius char 0.25\
+    front fillcolor rgb 'black' fillstyle solid 1.0 noborder
+
+set label 'Rho Cass.' at 5500,325733525 front
+
 set grid front
 
 plot '../../night.res' u 1:9 t '' lc rgb 'green' w filledcurves y1=0 \

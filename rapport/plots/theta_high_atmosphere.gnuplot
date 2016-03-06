@@ -39,7 +39,15 @@ set object circle at 15000,482348111 radius char 0.25\
 
 set label 'E. C. Majoris' at 14000,602348111 front
 
+# Rho Cassiopeiae
+set object circle at 7500,245733525.734 radius char 0.25\
+    front fillcolor rgb 'black' fillstyle solid 1.0 noborder
+
+set label 'Rho Cass.' at 5500,325733525 front
+
 set grid front
+
+set xtics 20000
 
 unset key
 plot for [i=1:16] '../../night_high_el_'.(10+5*i).'.res' using 1:9 title ''.(10+5*i).' deg' w l

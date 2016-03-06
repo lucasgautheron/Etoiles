@@ -7,10 +7,10 @@
 
 int main( int argc, const char* argv[] )
 {
-    const int steps = 5000;
+    const int steps = 10000;
     const int angles = 500;
-    const double L = 8;
-    const double R = 6400;
+    const double L = 8.4;
+    const double R = 6371;
     const double xmax = 100;
     double angle[angles];
     double factor[angles];
