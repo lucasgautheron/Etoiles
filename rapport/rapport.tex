@@ -15,7 +15,7 @@
 %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
 \geometry{a4paper} % or letterpaper (US) or a5paper or....
-% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+\geometry{margin=1in} % for example, change the margins to 2 inches all round
 % \geometry{landscape} % set up the page for landscape
 %   read geometry.pdf for detailed page layout information
 
@@ -187,6 +187,8 @@ Et alors :
 %\dfrac{\ln H_\theta(\lambda)}{\ln H_\phi(\lambda)} =\dfrac{\ln H_\theta(\lambda)}{\ln H(\lambda)} \dfrac{\ln H(\lambda)}{\ln H_\phi(\lambda)} 
 %\end{equation}
 
+\subsection{Rendement lumineux corps noir}
+
 \begin{figure}[H]
 \centering
   \caption{rendement lumineux $\eta$ d'un corps noir en fonction de sa température. La luminosité apparente pour l'oeil d'un corps noir est donné par le produit de sa puissance et de $\eta$. 
@@ -202,6 +204,8 @@ Le flux lumineux par unité de surface de l'étoile $I_*(T) = L_0 \eta(T) \sigma
 \label{fig:eta_t4}}
 \input{figures/eta_t4}
 \end{figure}
+
+\subsection{Condition de visibilité}
 
 Finalement la condition de visibilité se réécrit :
 
@@ -244,6 +248,30 @@ La luminosité donne donc une limite de la forme $d \leq \theta (T) R_*$. La fon
 \label{fig:theta_high_atmosphere}}
 \input{figures/theta_high_atmosphere.tex}
 \end{figure}
+
+\subsection{Magnitude apparente}
+
+La magnitude apparente dans une bande donnée est définie par :
+
+\begin{equation}
+m \equiv m_0 - 2.5 \log \dfrac{F}{F_0}
+\end{equation}
+
+Où $m_0$ est la magnitude d'un astre de référence dans cette bande, et $F$ et $F_0$ les flux reçus par l'astre et la référence dans cette bande.
+
+Une bande peut être définie par une gaussienne $(\lambda_{\mbox{max}},\sigma_\lambda)$. On travaillera avec les bandes V ($(\lambda_{\mbox{max}},\sigma_\lambda) = $ (551 nm, 88 nm)) et B ($(\lambda_{\mbox{max}},\sigma_\lambda) = $ (445 nm, 94 nm))
+
+Pour des corps noirs, en définissant le rendement dans une bande $X$ donnée comme $\eta_X(T)$ alors :
+
+\begin{equation}
+m \equiv m_0 - 2.5 \log \dfrac{\eta_X(T)}{\eta_X(T_0)} \dfrac{R^2}{R_0^2} \dfrac{d_0^2}{d^2}
+\end{equation}
+
+Cela donne en particulier :
+
+\begin{equation}
+m_{\mbox{max}} \equiv m_0 - 2.5 \log \dfrac{\eta_X(T)}{\eta_X(T_0)} - 5 \log {\dfrac{d_0}{R_0 \theta(T)}}
+\end{equation}
 
 %
 %\begin{figure}[H]
