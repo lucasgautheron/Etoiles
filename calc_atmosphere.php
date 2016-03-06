@@ -1,11 +1,11 @@
 <?php
 $MODE = $_SERVER['argv'][1];
 
-for($elevation = 0; $elevation <= 90; $elevation += 5)
+//$elevation = $_SERVER['argv'][2];
+for($elevation = 10; $elevation <= 90; $elevation += 5)
 {
-
-unlink("{$MODE}_high_el_$elevation.res");
-for($temp = 1000; $temp < 100000; $temp += 50)
+unlink("{$MODE}_el_$elevation.res");
+for($temp = 500; $temp < 25000; $temp += 50)
 {
     $temperature = $temp;
     $output = array();
@@ -17,6 +17,6 @@ for($temp = 1000; $temp < 100000; $temp += 50)
     $lumen = $values[5] * $values[1];
     $beta = sqrt(4*3.141592654 * $lumen / (2.5*pow(10,-6)));
     $alpha = 1/$beta;
-    file_put_contents("{$MODE}_high_el_$elevation.res", "$temp " . $output[0] . " $lumen $beta $alpha\n", FILE_APPEND);
+    file_put_contents("{$MODE}_el_$elevation.res", "$temp " . $output[0] . " $lumen $beta $alpha\n", FILE_APPEND);
 }
 }

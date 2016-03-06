@@ -50,7 +50,7 @@ void load_atmosphere()
 
 double transmittance(double wlength)
 {
-    for(int i = 0; i < atmosphere.size(); ++i)
+    for(unsigned int i = 0; i < atmosphere.size(); ++i)
     {
         if(wlength * 1e9 < atmosphere[i]->wlength)
         {
@@ -60,6 +60,24 @@ double transmittance(double wlength)
     return 1;
 }
 
+double calcairmass(double angle)
+{
+    const int steps = 10000;
+    const double L = 8.4;
+    const double R = 6371;
+    const double xmax = 75;
+    double factor = 0;
+
+    for(int j = 0; j < steps; ++j)
+    {
+        double x = xmax * double(j) / double(steps);
+        factor += exp(-x/L) * (x+R) / (sqrt( (x+R)*(x+R) - R*R * cos(angle) * cos(angle))) * xmax / double(steps);
+    }
+
+    return factor/L;
+}
+
+// TODO : blackbody vs spectrum
 int main( int argc, const char* argv[] )
 {
     if(argc < 5) 
@@ -68,12 +86,27 @@ int main( int argc, const char* argv[] )
         return 1;
     }
 
-    load_atmosphere();
-
     double temperature = strtod(argv[1], NULL), om_from = omega(strtod(argv[2], NULL)), om_to = omega(strtod(argv[3], NULL));
     if(om_from > om_to) { double aux = om_from; om_from = om_to; om_to = aux; }
     int steps = atoi(argv[4]);
     if(steps < 100) steps = 100;
+
+    // include atmosphere
+    bool atmosphere = false;
+    double airmass = 1.0;
+    if(argc >= 6)
+    {
+        atmosphere = (bool)atoi(argv[5]);
+    }
+
+    if(atmosphere)
+    {
+        load_atmosphere();
+        if(argc >= 7)
+        {
+            airmass = calcairmass(CONST_PI * (double)atof(argv[6]) / 180);
+        }
+    }
 
     double power = 0, power_coef = 0, cur = 0, cur_coef = 0;
     double step = (om_to-om_from)/double((steps <= CONST_MAXSTEPS ? steps : CONST_MAXSTEPS));
@@ -87,7 +120,8 @@ int main( int argc, const char* argv[] )
     int i = 0, k = delta;
     for(double omega = om_from; omega < om_to; omega += step)
     {
-        cur = (1.0/4.0)*I(temperature, omega) * transmittance(wavelength(omega));
+        cur = (1.0/4.0)*I(temperature, omega) * (atmosphere ? pow(transmittance(wavelength(omega)), airmass) : 1.0);
+        //printf("%f %f %f %f\n", pow(transmittance(wavelength(omega)), airmass), transmittance(wavelength(omega)), airmass, CONST_PI * (double)atof(argv[6]) / 180);
         cur_coef = F(cur, omega);
         power += cur;
         power_coef += cur_coef;
