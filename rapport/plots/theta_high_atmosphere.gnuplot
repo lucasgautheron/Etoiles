@@ -2,55 +2,70 @@ set terminal epslatex
 set out '../figures/theta_high_atmosphere.tex'
 
 set xlabel '$T$ (en K)'
-set ylabel '$\theta(T)$'
+set ylabel '$\theta$ (mas)'
+
+set xrange [2000:250000]
+
+f(x) = 1.56887285063 * 10**(-6/5) * (9600/x)**2
+g(x,y,m) = 1.56887285063 * 10**(-m/5) * sqrt(0.146/y) * (9600/x)**2
 
 # vega
-set object circle at 9600,120710973 radius char 0.25 \
+set object circle at 9600,(206265000/120710973) radius char 0.25 \
     front fillcolor rgb 'black' fillstyle solid 1.0 noborder
-set label 'Vega' at 8400,205710973 front
+set label 'Vega' at 10000,1 front
 
 # alpha centuri
-set object circle at 5260,62454321 radius char 0.25 \
+set object circle at 5260,(206265000/62454321) radius char 0.25 \
     front fillcolor rgb 'black' fillstyle solid 1.0 noborder
 
-set label '$\alpha$ Centaure' at 2500,154022988 front
+set label '$\alpha$ Centaure' at 2500,5 front
 
-# Sirius
-set object circle at 24800,591329952 radius char 0.25 \
+# proxima centuri
+set object circle at 3040,0.5 radius char 0.25 \
     front fillcolor rgb 'black' fillstyle solid 1.0 noborder
 
-set label 'Sirius A' at 22000,677592968 front
+set label 'P. Centaure' at 900,0.25 front
 
-# Sirius B
-set object circle at 24800,591329952 radius char 0.25 \
+
+# EC A
+set object circle at 15000,(0.42763) radius char 0.25\
     front fillcolor rgb 'black' fillstyle solid 1.0 noborder
 
-set label 'Sirius A' at 22000,677592968 front
-
-# R-Doradus
-#set object circle at 2700,6497359 radius char 0.2\
-#    front fillcolor rgb 'black' fillstyle solid 1.0 noborder
-
-#set label 'R-Dor.' at 1500,14497359 front
+set label 'Eta Carinae A' at 13500,0.8 front
 
 # Deneb
-set object circle at 15000,482348111 radius char 0.25\
+
+set object circle at 8000,(1.2) radius char 0.25\
     front fillcolor rgb 'black' fillstyle solid 1.0 noborder
 
-set label 'E. C. Majoris' at 14000,602348111 front
+set label 'Deneb' at 6500,1.8 front
+
+# Deneb
+
+set object circle at 9940,(3.0) radius char 0.25\
+    front fillcolor rgb 'black' fillstyle solid 1.0 noborder
+
+set label 'Sirius' at 9000,4.0 front
 
 # Rho Cassiopeiae
-set object circle at 7500,245733525.734 radius char 0.25\
+set object circle at 7500,(206265000/245733525.734) radius char 0.25\
     front fillcolor rgb 'black' fillstyle solid 1.0 noborder
 
-set label 'Rho Cass.' at 5500,325733525 front
+set label '$\rho$ Cass.' at 5300,0.5 front
+
+set object circle at 1830,102 radius char 0.25\
+    front fillcolor rgb 'black' fillstyle solid 1.0 noborder
+
+set label 'V762 Cas' at 1400,200 front
 
 set grid front
 
-set xtics 20000
+#set xtics 20000
+
+set logscale xy
 
 unset key
-plot for [i=1:16] '../../night_high_el_'.(10+5*i).'.res' using 1:9 title ''.(10+5*i).' deg' w l
+plot for [i=1:16] '../../night_high_el_'.(10+5*i).'.res' using 1:(206265000/$11) title ''.(10+5*i).' deg' w l lw 2, '' u 1:(g($1,$9,6)) w l lw 5 dt 5 lc rgb '#8B0000' t '$m_V
 
 
 

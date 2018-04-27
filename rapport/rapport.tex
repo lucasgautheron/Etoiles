@@ -21,6 +21,7 @@
 
 \usepackage{import}
 \subimport{../common/}{header}
+\graphicspath {{figures/}}
 
 % \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
 
@@ -198,12 +199,12 @@ Et alors :
 
 Le flux lumineux par unité de surface de l'étoile $I_*(T) = L_0 \eta(T) \sigma T^4$ (qui ne dépend donc également que de la température) en lumen/m$^2$ est représenté figure \ref{fig:eta_t4}. 
 
-\begin{figure}[H]
-\centering
-  \caption{Courbe de $I_*(T) = L_0 \eta(T) \sigma T^4$, qui est directement proportionnel au flux reçu par l'oeil.
-\label{fig:eta_t4}}
-\input{figures/eta_t4}
-\end{figure}
+%\begin{figure}[H]
+%\centering
+  %\caption{Courbe de $I_*(T) = L_0 \eta(T) \sigma T^4$, qui est directement proportionnel au flux reçu par l'oeil.
+%\label{fig:eta_t4}}
+%\input{figures/eta_t4}
+%\end{figure}
 
 \subsection{Condition de visibilité}
 
@@ -237,14 +238,14 @@ La luminosité donne donc une limite de la forme $d \leq \theta (T) R_*$. La fon
 
 \begin{figure}[H]
 \centering
-  \caption{Courbe de $\theta(T) =  d_{max}/R_* $ en tenant compte de l'atmosphère, et pour différents angles d'élévation. (de 15 à 90 deg de 5 en 5)
+  \caption{Diamètre apparent minimum de visibilité $\theta =  R_*/d_{max}$ d'une étoile en fonction de sa température, en tenant compte de l'atmosphère terrestre, et pour différents angles d'élévation. (de 15 à 90 deg de 5 en 5). La courbe en pointillés correspond à une magnitude apparente dans la bande $V$ égale à 6 (limite conventionnelle de visibilité).
 \label{fig:theta_atmosphere}}
 \input{figures/theta_atmosphere.tex}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-  \caption{Courbe de $\theta(T) =  d_{max}/R_* $ en tenant compte de l'atmosphère, et pour différents angles d'élévation. (de 15 à 90 deg de 5 en 5)
+  \caption{Courbe de $\theta(T) =  R_*/d_{max} $ en tenant compte de l'atmosphère, et pour différents angles d'élévation. (de 15 à 90 deg de 5 en 5)
 \label{fig:theta_high_atmosphere}}
 \input{figures/theta_high_atmosphere.tex}
 \end{figure}
@@ -273,6 +274,8 @@ Cela donne en particulier :
 m_{\mbox{max}} \equiv m_0 - 2.5 \log \left ( \dfrac{\eta_X(T)}{\eta_X(T_0)} \dfrac{T^4}{T_0^4}\right) - 5 \log {\dfrac{d_0}{R_0 \theta(T)}}
 \end{equation}
 
+$\theta_{\mbox{Vega}} = $ 1.56887285063 mas
+$T_{\mbox{Vega}} = $ 9600 K
 %
 %\begin{figure}[H]
 %\centering

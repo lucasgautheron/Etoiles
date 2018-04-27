@@ -24,8 +24,10 @@
 // gaussian approximation
 //#define V(o) (exp(-pow((wavelength(o)-559.1e-9)/42.4e-9, 2.0)/2)) // day
 #define V(o) (exp(-pow((wavelength(o)-502.8e-9)/39.5e-9, 2.0)/2)) // night
+#define VBAND(o) (exp(-pow((wavelength(o)-551e-9)/(sqrt(2)*88e-9/2.355), 2.0)/2))
 
 #define F(i,o) (i*V(o))
+#define FVBAND(i,o) (i*VBAND(o))
 
 struct point
 {
@@ -108,29 +110,33 @@ int main( int argc, const char* argv[] )
         }
     }
 
-    double power = 0, power_coef = 0, cur = 0, cur_coef = 0;
+    double power = 0, power_coef = 0, cur = 0, cur_coef = 0, v_band = 0;
     double step = (om_to-om_from)/double((steps <= CONST_MAXSTEPS ? steps : CONST_MAXSTEPS));
 
     int delta = steps/150;
     int saved = steps/delta; 
 
-    double *pulsations = new double[saved+1], *powers = new double[saved+1], *powers_coef = new double[saved+1];
+    double *pulsations = new double[saved+1], *powers = new double[saved+1], *powers_coef = new double[saved+1],
+           *v_bands = new double[saved+1];
 
     
     int i = 0, k = delta;
     for(double omega = om_from; omega < om_to; omega += step)
     {
+        double cur_no_atm = (1.0/4.0)*I(temperature, omega);
         cur = (1.0/4.0)*I(temperature, omega) * (atmosphere ? pow(transmittance(wavelength(omega)), airmass) : 1.0);
         //printf("%f %f %f %f\n", pow(transmittance(wavelength(omega)), airmass), transmittance(wavelength(omega)), airmass, CONST_PI * (double)atof(argv[6]) / 180);
         cur_coef = F(cur, omega);
         power += cur;
         power_coef += cur_coef;
+        v_band += FVBAND(cur_no_atm, omega);
 
         if(k == delta) 
         {
             pulsations[i] = omega;
             powers[i] = cur;
             powers_coef[i] = cur_coef;
+            v_bands[i] = v_band;
             ++i;
             k = 0;
         }
@@ -139,12 +145,13 @@ int main( int argc, const char* argv[] )
 
     power *= CONST_CALC * step;
     power_coef *= CONST_CALC * step;
+    v_band *= CONST_CALC * step;
     double lum = CONST_SPECTRAL_LUM * power_coef;
 
     double total = CONST_STEFAN * temperature * temperature * temperature * temperature;
 
-    // power.calculated(W/m²)   total.power(W/m²)   error   visible.power(W/m²) visible.power/total, efficiency(L/W) 
-    printf("%lf %lf %lf %lf %lf %lf", power, total, power/total, power_coef, power_coef/total, lum/total);
+    // power.calculated(W/m²)   total.power(W/m²)   error   visible.power(W/m²) visible.power/total, efficiency(L/W), v band, v band/total
+    printf("%lf %lf %lf %lf %lf %lf %lf %lf", power, total, power/total, power_coef, power_coef/total, lum/total, v_band, v_band/total);
 
     /*char filename[32] = "";
     sprintf(filename, "data/%d.dat", (int)temperature);

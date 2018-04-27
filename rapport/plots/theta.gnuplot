@@ -47,7 +47,7 @@ set label 'Rho Cass.' at 5500,325733525 front
 
 set grid front
 
-plot '../../night.res' u 1:9 t '' lc rgb 'green' w filledcurves y1=0 \
+plot '../../night.res' u 1:11 t '' lc rgb 'green' w filledcurves y1=0 \
 fs transparent solid 0.25
 
 
